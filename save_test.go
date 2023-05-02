@@ -1,4 +1,4 @@
-package offheap_test
+package offheap
 
 import (
 	"fmt"
@@ -8,7 +8,6 @@ import (
 	"testing"
 
 	cv "github.com/glycerine/goconvey/convey"
-	"github.com/glycerine/offheap"
 )
 
 func TestSaveRestore(t *testing.T) {
@@ -20,7 +19,7 @@ func TestSaveRestore(t *testing.T) {
 	}
 	defer os.Remove(fn)
 
-	h := offheap.NewHashFileBacked(8, fn)
+	h := NewHashFileBacked(8, fn)
 
 	cv.Convey("saving and then loading a table should restore the contents from disk", t, func() {
 		cv.So(h.Population, cv.ShouldEqual, 0)
@@ -54,7 +53,7 @@ func TestSaveRestore(t *testing.T) {
 		}
 		defer os.Remove(fncopy)
 
-		h2 := offheap.NewHashFileBacked(8, fncopy)
+		h2 := NewHashFileBacked(8, fncopy)
 
 		cell2 := h2.Lookup(23)
 		cv.So(cell2.Value[0], cv.ShouldEqual, 55)
@@ -68,13 +67,13 @@ func TestSaveRestore(t *testing.T) {
 
 func TestMetaSaveRestoreMetadataInMsgpack(t *testing.T) {
 	cv.Convey("saving the metadata of a table using msgpack should result in restore-able metadata", t, func() {
-		t1 := offheap.HashTable{
+		t1 := HashTable{
 			Population: 4,
 			ZeroUsed:   true,
-			ZeroCell: offheap.Cell{
+			ZeroCell: Cell{
 				UnHashedKey: 43,
-				ByteKey:     offheap.Key_t{0x23},
-				Value:       offheap.Val_t{0x57},
+				ByteKey:     Key_t{0x23},
+				Value:       Val_t{0x57},
 			},
 		}
 		bts, err := t1.MarshalMsg(nil)
@@ -82,7 +81,7 @@ func TestMetaSaveRestoreMetadataInMsgpack(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		t2 := offheap.HashTable{}
+		t2 := HashTable{}
 		left, err := t2.UnmarshalMsg(bts)
 		if err != nil {
 			t.Fatal(err)
@@ -99,7 +98,7 @@ func TestMetaSaveRestoreMetadataInMsgpack(t *testing.T) {
 		// This is not a perfect
 		// test since msgpack serialization sizes vary depending on content. Hence we
 		// give our selves an extra 256 byte buffer.
-		cv.So(len(bts), cv.ShouldBeLessThan, offheap.MetadataHeaderMaxBytes-256)
+		cv.So(len(bts), cv.ShouldBeLessThan, MetadataHeaderMaxBytes-256)
 	})
 }
 
@@ -116,7 +115,7 @@ func Test701SaveRestoreMmapWithRepopulate(t *testing.T) {
 		//defer os.Remove(fn)
 
 		fmt.Printf("\n\nabout to create h\n")
-		h := offheap.NewHashFileBacked(4096, fn)
+		h := NewHashFileBacked(4096, fn)
 		fmt.Printf("\n\ndone with creating h\n")
 
 		h.InsertBK([]byte("hello"), 3)
@@ -157,7 +156,7 @@ func Test701SaveRestoreMmapWithRepopulate(t *testing.T) {
 		fmt.Printf("\n\n copied fn='%s' to fncopy='%s' and now trying to read it...\n",
 			fn, fncopy)
 
-		h2 := offheap.NewHashFileBacked(-1, fncopy)
+		h2 := NewHashFileBacked(-1, fncopy)
 		cv.So(h2.Population, cv.ShouldEqual, n+1)
 
 		i2, found := h2.LookupBKInt([]byte("hello"))

@@ -1,4 +1,4 @@
-package offheap_test
+package offheap
 
 import (
 	"fmt"
@@ -6,13 +6,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/glycerine/offheap"
 	cv "github.com/glycerine/goconvey/convey"
 )
 
 func TestRandomOperationsOrder(t *testing.T) {
 
-	h := offheap.NewHashTable(2)
+	h := NewHashTable(2)
 
 	m := make(map[uint64]int)
 

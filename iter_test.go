@@ -1,16 +1,15 @@
-package offheap_test
+package offheap
 
 import (
 	"testing"
 
-	"github.com/glycerine/offheap"
 	cv "github.com/glycerine/goconvey/convey"
 )
 
 func TestIterator(t *testing.T) {
 
 	cv.Convey("Given a table with 0,1,2 in it, the Iterator should give all three values back", t, func() {
-		h := offheap.NewHashTable(8)
+		h := NewHashTable(8)
 		cv.So(h.Population, cv.ShouldEqual, 0)
 		for i := 0; i < 3; i++ {
 			_, ok := h.Insert(uint64(i))
@@ -34,7 +33,7 @@ func TestIterator(t *testing.T) {
 	})
 
 	cv.Convey("Given a table with 1,2,3 in it, the Iterator should give all three values back", t, func() {
-		h := offheap.NewHashTable(8)
+		h := NewHashTable(8)
 		cv.So(h.Population, cv.ShouldEqual, 0)
 		for i := 1; i < 4; i++ {
 			_, ok := h.Insert(uint64(i))
@@ -58,7 +57,7 @@ func TestIterator(t *testing.T) {
 	})
 
 	cv.Convey("Given a table with the regular 0-th slot and the special zero-location spot occupied, then the the Iterator should still give all the values back", t, func() {
-		h := offheap.NewHashTable(4)
+		h := NewHashTable(4)
 		cv.So(h.Population, cv.ShouldEqual, 0)
 		for i := 0; i < 2; i++ {
 			_, ok := h.Insert(uint64(i))
@@ -82,7 +81,7 @@ func TestIterator(t *testing.T) {
 	})
 
 	cv.Convey("Given a table with the regular 0-th slot *empty* and the special zero-location spot occupied, then the the Iterator should still give all the values back", t, func() {
-		h := offheap.NewHashTable(8)
+		h := NewHashTable(8)
 		cv.So(h.Population, cv.ShouldEqual, 0)
 		for i := 0; i < 2; i++ {
 			_, ok := h.Insert(uint64(i))
@@ -108,7 +107,7 @@ func TestIterator(t *testing.T) {
 
 	cv.Convey("Given a table with the regular 0-th slot *filled* and the special zero-location spot *empty*, then the the Iterator should still give the one value back", t, func() {
 		// size 4 just happens to generate an occupation at h.Cells[0]
-		h := offheap.NewHashTable(4)
+		h := NewHashTable(4)
 		cv.So(h.Population, cv.ShouldEqual, 0)
 		i := 1
 		_, ok := h.Insert(uint64(i))
@@ -131,7 +130,7 @@ func TestIterator(t *testing.T) {
 	})
 
 	cv.Convey("Given an empty table, an Iterator should still work fine, without crashing", t, func() {
-		h := offheap.NewHashTable(4)
+		h := NewHashTable(4)
 		cv.So(h.Population, cv.ShouldEqual, 0)
 
 		found := []uint64{}

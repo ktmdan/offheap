@@ -1,19 +1,17 @@
-package offheap_test
+package offheap
 
 import (
 	"encoding/binary"
 	"fmt"
-
-	"github.com/glycerine/offheap"
 )
 
 // compare for correctness checking
-func hashEqualsMap(h *offheap.HashTable, m map[uint64]int) bool {
+func hashEqualsMap(h *HashTable, m map[uint64]int) bool {
 	if h.Population != uint64(len(m)) {
 		fmt.Printf("h has size %d, but m has size %d.\n", h.Population, len(m))
 		return false
 	}
-	var cell *offheap.Cell
+	var cell *Cell
 	for k, v := range m {
 		cell = h.Lookup(k)
 		if cell == nil {
@@ -28,7 +26,7 @@ func hashEqualsMap(h *offheap.HashTable, m map[uint64]int) bool {
 	return true
 }
 
-func stringHashEqualsMap(h *offheap.StringHashTable, m map[string]int) bool {
+func stringHashEqualsMap(h *StringHashTable, m map[string]int) bool {
 	if h.Population != uint64(len(m)) {
 		fmt.Printf("h has size %d, but m has size %d.\n", h.Population, len(m))
 		return false

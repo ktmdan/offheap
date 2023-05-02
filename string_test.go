@@ -1,4 +1,4 @@
-package offheap_test
+package offheap
 
 import (
 	"fmt"
@@ -7,7 +7,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/glycerine/offheap"
 	cv "github.com/glycerine/goconvey/convey"
 )
 
@@ -27,7 +26,7 @@ func TestRandomStringOps(t *testing.T) {
 		nm[i].num = i
 	}
 
-	h := offheap.NewStringHashTable(2)
+	h := NewStringHashTable(2)
 
 	m := make(map[string]int)
 

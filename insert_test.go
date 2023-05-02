@@ -1,15 +1,14 @@
-package offheap_test
+package offheap
 
 import (
 	"testing"
 
-	"github.com/glycerine/offheap"
 	cv "github.com/glycerine/goconvey/convey"
 )
 
 func TestInsert(t *testing.T) {
 
-	h := offheap.NewHashTable(8)
+	h := NewHashTable(8)
 
 	cv.Convey("inserting a non-zero key should enable retrieving them with Lookup", t, func() {
 		cv.So(h.Population, cv.ShouldEqual, 0)

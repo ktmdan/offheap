@@ -1,22 +1,21 @@
-package offheap_test
+package offheap
 
 import (
 	"testing"
 
-	"github.com/glycerine/offheap"
 	cv "github.com/glycerine/goconvey/convey"
 )
 
 func TestByteKeyInsertLookup(t *testing.T) {
 
-	h := offheap.NewByteKeyHashTable(8)
+	h := NewByteKeyHashTable(8)
 
 	cv.Convey("inserting with a byte slice key using InsertBK should enable retrieving them with LookupBK", t, func() {
 		cv.So(h.Population, cv.ShouldEqual, 0)
 
 		look, ok := h.LookupBK([]byte("hello"))
 		cv.So(ok, cv.ShouldEqual, false)
-		cv.So(look, cv.ShouldResemble, offheap.Val_t{})
+		cv.So(look, cv.ShouldResemble, Val_t{})
 
 		ok = h.InsertBK([]byte("hello"), "world")
 		cv.So(ok, cv.ShouldEqual, true)
@@ -31,14 +30,14 @@ func TestByteKeyInsertLookup(t *testing.T) {
 
 func TestStringKeyInsertLookup(t *testing.T) {
 
-	h := offheap.NewStringHashTable(8)
+	h := NewStringHashTable(8)
 
 	cv.Convey("inserting with a byte slice key using InsertBK should enable retrieving them with LookupBK", t, func() {
 		cv.So(h.Population, cv.ShouldEqual, 0)
 
 		look, ok := h.LookupStringKey("hello")
 		cv.So(ok, cv.ShouldEqual, false)
-		cv.So(look, cv.ShouldResemble, offheap.Val_t{})
+		cv.So(look, cv.ShouldResemble, Val_t{})
 
 		ok = h.InsertStringKey("hello", "world")
 		cv.So(ok, cv.ShouldEqual, true)

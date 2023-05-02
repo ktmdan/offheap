@@ -1,15 +1,14 @@
-package offheap_test
+package offheap
 
 import (
 	"testing"
 
-	"github.com/glycerine/offheap"
 	cv "github.com/glycerine/goconvey/convey"
 )
 
 func TestDelete(t *testing.T) {
 
-	h := offheap.NewHashTable(2)
+	h := NewHashTable(2)
 
 	h.Clear()
 	cv.Convey("delete should eliminate an element, leaving the rest", t, func() {

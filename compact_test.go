@@ -1,16 +1,15 @@
-package offheap_test
+package offheap
 
 import (
 	"testing"
 
-	"github.com/glycerine/offheap"
 	cv "github.com/glycerine/goconvey/convey"
 )
 
 func TestCompact(t *testing.T) {
 
 	cv.Convey("Given a big table with no values it, Compact() should re-allocate it to be smaller", t, func() {
-		h := offheap.NewHashTable(128)
+		h := NewHashTable(128)
 		cv.So(h.ArraySize, cv.ShouldEqual, 128)
 		cv.So(h.Population, cv.ShouldEqual, 0)
 
@@ -24,7 +23,7 @@ func TestCompact(t *testing.T) {
 
 func TestCompatAfterDelete(t *testing.T) {
 
-	h := offheap.NewHashTable(2)
+	h := NewHashTable(2)
 
 	h.Clear()
 	cv.Convey("after being filled up and then deleted down to just 2 elements, Compact() should reduce table size to 4", t, func() {

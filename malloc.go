@@ -2,10 +2,9 @@ package offheap
 
 import (
 	"fmt"
+	"github.com/tysonmote/gommap"
 	"os"
 	"syscall"
-
-	"github.com/glycerine/gommap"
 )
 
 // The MmapMalloc struct represents either an anonymous, private
@@ -19,7 +18,6 @@ import (
 //
 // For use when the Go GC overhead is too large, and you need to move
 // the hash table off-heap.
-//
 type MmapMalloc struct {
 	Path         string
 	File         *os.File
@@ -71,7 +69,6 @@ func (mm *MmapMalloc) Free() {
 // to allocate, and the function will panic.
 //
 // The returned value's .Mem member holds a []byte pointing to the returned memory (as does .MMap, for use in other gommap calls).
-//
 func Malloc(numBytes int64, path string) *MmapMalloc {
 
 	mm := MmapMalloc{

@@ -3,7 +3,7 @@ package offheap
 import (
 	"fmt"
 
-	xxh64 "github.com/glycerine/xxhash-64"
+	xxh64 "github.com/ktmdan/xxhash-64"
 )
 
 // ByteKeyHashTable shows how to specialize HashTable to
@@ -16,9 +16,9 @@ type ByteKeyHashTable HashTable
 //
 // We use the 64-bit implimentation of XXHash for speed.
 // see
-//   https://github.com/OneOfOne/xxhash (github.com/glycerine/xxhash-64 version-locks)
-//   http://fastcompression.blogspot.com/2014/07/xxhash-wider-64-bits.html
 //
+//	https://github.com/OneOfOne/xxhash (github.com/glycerine/xxhash-64 version-locks)
+//	http://fastcompression.blogspot.com/2014/07/xxhash-wider-64-bits.html
 var xxHasher64 = xxh64.New64()
 
 // NewByteKeyHashTable produces a new ByteKeyHashTable, one specialized for

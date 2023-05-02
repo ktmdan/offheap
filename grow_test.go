@@ -1,15 +1,14 @@
-package offheap_test
+package offheap
 
 import (
 	"testing"
 
-	"github.com/glycerine/offheap"
 	cv "github.com/glycerine/goconvey/convey"
 )
 
 func TestGrowth(t *testing.T) {
 
-	h := offheap.NewHashTable(2)
+	h := NewHashTable(2)
 
 	cv.Convey("Given a size 2 table, inserting 0 and 1 should retain and recall the 0 and the 1 keys", t, func() {
 		cv.So(h.Population, cv.ShouldEqual, 0)
@@ -42,16 +41,4 @@ func TestGrowth(t *testing.T) {
 		cv.So(cell, cv.ShouldEqual, nil)
 
 	})
-}
-
-func upper_power_of_two(v uint64) uint64 {
-	v--
-	v |= v >> 1
-	v |= v >> 2
-	v |= v >> 4
-	v |= v >> 8
-	v |= v >> 16
-	v |= v >> 32
-	v++
-	return v
 }
